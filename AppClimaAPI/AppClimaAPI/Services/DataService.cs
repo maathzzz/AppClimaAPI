@@ -5,21 +5,79 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
+
+using AppClimaAPI.View;
 using AppClimaAPI.Model;
+
+using System.Security.Cryptography.X509Certificates;
 
 namespace AppClimaAPI.Services
 {
     class DataService
     {
-
-        public static async Task<Clima> GetPrevisaoDoTempo(string cidade)
+        public static async Task<Clima> GetPrevisaoDoClima(string cidade)
         {
             string appId = "d5bd97549255db7c953bbbf53f4e5b52";
 
             string queryString = "http://api.openweathermap.org/data/2.5/weather?q=" + cidade + "&units=metric" + "&appid=" + appId;
             dynamic resultado = await getDataFromService(queryString).ConfigureAwait(false);
 
-            // continuar aqui (22)
+            if (resultado["weather"] != null)
+            {
+                Clima previsao = new Clima();
+                previsao.Title = (string)resultado["name"];
+                previsao.Temperature = (string)resultado["main"]["temp"] + " C";
+                previsao.Wind = (string)resultado["wind"]["speed"] + " mph";
+                previsao.Humidity = (string)resultado["main"]["humidity"] + " %";
+                previsao.Visibility = (string)resultado["weather"][0]["main"];
+                DateTime time = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                DateTime sunrise = time.AddSeconds((double)resultado["sys"]["sunrise"]);
+                DateTime sunset = time.AddSeconds((double)resultado["sys"]["sunset"]);
+                previsao.Sunrise = String.Format("{0:d/MM/yyyy HH:mm:ss}", sunrise);
+                previsao.Sunset = String.Format("{0:d/MM/yyyy HH:mm:ss}", sunset);
+
+            }
+            else 
+            {
+                return null;
+            }
+            
         }
+
+        public static async Task<dynamic> getDataFromService(string queryString)
+        {
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync(queryString);
+            dynamic data = null;
+
+            if (response != null)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                data = JsonConvert.DeserializeObject(json);
+            }
+            return data;
+        }
+
+        public static async Task<dynamic> getDataFromServiceByCity(string city)
+        {
+            string appId = "d5bd97549255db7c953bbbf53f4e5b52";
+
+            // string url = string.Format("http://api.openweathermap.org/data/2.5/forecast/daily?q={0}&units=metric&cnt=1&APPID={1}", city.Trim(), appId);
+            // api.openweathermap.org/data/2.5/weather?q=London&{YOUR_API_KEY}
+
+            string url = string.Format("http://api.openweathermap.org/data/2.5/forecast/daily?q={0}&units=metric&cnt=1&APPID={1}", city.Trim(), appId);
+            HttpClient client = new HttpClient();
+
+            var response = await client.GetAsync(url);
+            dynamic data = null;
+
+            if (response !=null)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                data = JsonConvert.DeserializeObject(json);
+            }
+            return data;
+        }
+
     }
 }
