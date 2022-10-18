@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AppClimaAPI.Model
 {
-    class Clima
+    public class Clima
     {
         public string Title { get; set; }
         public string Temperature { get; set; }

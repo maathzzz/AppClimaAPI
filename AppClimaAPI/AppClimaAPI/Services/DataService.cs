@@ -13,13 +13,13 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace AppClimaAPI.Services
 {
-    class DataService
+    public class DataService
     {
         public static async Task<Clima> GetPrevisaoDoClima(string cidade)
         {
             string appId = "d5bd97549255db7c953bbbf53f4e5b52";
 
-            string queryString = "http://api.openweathermap.org/data/2.5/weather?q=" + cidade + "&units=metric" + "&appid=" + appId;
+            string queryString = "https://api.openweathermap.org/data/2.5/weather?q=" + cidade + "&units=metric" + "&appid=" + appId;
             dynamic resultado = await getDataFromService(queryString).ConfigureAwait(false);
 
             if (resultado["weather"] != null)
@@ -35,6 +35,7 @@ namespace AppClimaAPI.Services
                 DateTime sunset = time.AddSeconds((double)resultado["sys"]["sunset"]);
                 previsao.Sunrise = String.Format("{0:d/MM/yyyy HH:mm:ss}", sunrise);
                 previsao.Sunset = String.Format("{0:d/MM/yyyy HH:mm:ss}", sunset);
+                return previsao;
 
             }
             else 
@@ -65,7 +66,7 @@ namespace AppClimaAPI.Services
             // string url = string.Format("http://api.openweathermap.org/data/2.5/forecast/daily?q={0}&units=metric&cnt=1&APPID={1}", city.Trim(), appId);
             // api.openweathermap.org/data/2.5/weather?q=London&{YOUR_API_KEY}
 
-            string url = string.Format("http://api.openweathermap.org/data/2.5/forecast/daily?q={0}&units=metric&cnt=1&APPID={1}", city.Trim(), appId);
+            string url = string.Format("https://api.openweathermap.org/data/2.5/forecast/daily?q={0}&units=metric&cnt=1&APPID={1}", city.Trim(), appId);
             HttpClient client = new HttpClient();
 
             var response = await client.GetAsync(url);

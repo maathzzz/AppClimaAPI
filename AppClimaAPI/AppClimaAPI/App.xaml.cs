@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AppClimaAPI.View;
+using System;
 using Xamarin.Forms;
+using System.IO;
 using Xamarin.Forms.Xaml;
 
 namespace AppClimaAPI
@@ -10,7 +12,7 @@ namespace AppClimaAPI
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new PaginaInicial();
         }
 
         protected override void OnStart()

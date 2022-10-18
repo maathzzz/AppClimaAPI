@@ -1,34 +1,33 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppClimaAPI.View.PaginaInicial"
-             Title="Página Inicial">
-  <ContentView.Content>
-      <StackLayout>
+             x:Class="AppClimaAPI.View.PaginaInicial">
+    <ContentPage.Content>
+        <StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" BackgroundColor="#545454">
                 <StackLayout Padding="10,10,10,10" HorizontalOptions="Start">
                     <Label Text="Buscar Cidade" TextColor="White" FontAttributes="Bold" FontSize="Medium" />
                     <Label x:Name="cidadeLabel" Text="Digite o nome da cidade" TextColor="Yellow" FontSize="Small" />
                     <Entry x:Name="cidadeEntry"/>
                 </StackLayout>
-                
+
                 <StackLayout Padding="0,0,0,0" VerticalOptions="End">
                     <Button x:Name="btnPrevisao" Text="Previsão do Clima" WidthRequest="185" BorderWidth="1"
                             Clicked="btnPrevisao_Clicked"/>
                 </StackLayout>
             </StackLayout>
-          
+
             <StackLayout Padding="10,10,10,10" HorizontalOptions="Start">
                 <!-- <Image x:Name="" /> -->
                 <Label Text="Local"/>
                 <Label Text="{Binding Title}" TextColor="Black"/>
-                
+
                 <Label Text="Temperatura"/>
                 <Label x:Name="lbl_Temp" Text="{Binding Temperature}" TextColor="Black"/>
 
                 <Label Text="Velocidade do Vento"/>
                 <Label x:Name="lbl_Wind" Text="{Binding Wind}" TextColor="Black"/>
-                
+
                 <Label Text="Humidade do Ar"/>
                 <Label x:Name="lbl_Hum" Text="{Binding Humidity}" TextColor="Black"/>
 
@@ -42,6 +41,5 @@
                 <Label x:Name="lbl_Sunset" Text="{Binding Sunset}" TextColor="Black"/>
             </StackLayout>
         </StackLayout>
-      
-  </ContentView.Content>
-</ContentView>
+    </ContentPage.Content>
+</ContentPage>

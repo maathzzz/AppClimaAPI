@@ -13,8 +13,9 @@ using Xamarin.Forms.Xaml;
 
 namespace AppClimaAPI.View
 {
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaginaInicial : ContentView 
+    public partial class PaginaInicial : ContentPage
     {
         public PaginaInicial()
         {
